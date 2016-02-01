@@ -26,7 +26,7 @@
     DETECT
     Nintendo - Super Nintendo Entertainment System.lpl
 
-.PARAMETER retroarchpath
+.PARAMETER RetroArchPath
     The path to the RetroArch directory.
 
     Required?                    true
@@ -35,7 +35,7 @@
     Accept pipeline input?       false
     Accept wildcard characters?
 
-.PARAMETER rompath
+.PARAMETER ROMpath
     The path to the directory containing the ROM files you wish to scan.
 
     Required?                    true
@@ -43,6 +43,16 @@
     Default value                
     Accept pipeline input?       false
     Accept wildcard characters?
+
+.PARAMETER FileExtensions
+    An array of file extensions you wish to include in the scan.
+    If omitted, all files found are included in the scan.
+
+    Required?                    false
+    Position?                    2
+    Default value                
+    Accept pipeline input?       false
+    Accept wildcard characters?  true
 
 .INPUTS
     None.
@@ -52,6 +62,18 @@
 
 .EXAMPLE
     .\new-playlist.ps1 -RetroArchPath C:\RetroArch -ROMPath C:\ROMS
+    
+    Scan C:\ROMS and create the playlist in C:\RetroArch
+
+.EXAMPLE
+    .\new-playlist.ps1 -RetroArchPath C:\RetroArch -ROMPath C:\ROMS -FileExtensions *.zip,*.7z
+
+    Scan C:\ROMS and create the playlist in C:\RetroArch, only including files with an extension of .zip or .7z
+
+.EXAMPLE
+    .\new-playlist.ps1 -RetroArchPath C:\RetroArch -ROMPath C:\ROMS -FileExtensions *.iso,*.cue
+
+    Scan C:\ROMS and create the playlist in C:\RetroArch, only including files with an extension of .iso or .cue
 
 .NOTES
     Created 30/01/2016
@@ -62,7 +84,9 @@ Param(
     [Parameter(Mandatory=$True)]
 	[String]$RetroArchPath=$(Read-Host "RetroArch path"),
     [Parameter(Mandatory=$True)]
-	[String]$ROMPath=$(Read-Host "ROM path")
+	[String]$ROMPath=$(Read-Host "ROM path"),
+    [Parameter(Mandatory=$False)]
+	[String[]]$FileExtensions="*"
 )
 
 Function Select-TextItem{ 
@@ -107,7 +131,7 @@ Function Get-ZipFile{
     )
 
     [Reflection.Assembly]::LoadWithPartialName('System.IO.Compression.FileSystem')|Out-Null
-    $ROMZipFileEntry = ([IO.Compression.ZipFile]::OpenRead($ROMFullFilePath)[0].Entries.FullName)
+    $ROMZipFileEntry = ([IO.Compression.ZipFile]::OpenRead($ROMFullFilePath).Entries.FullName)[0]
 
     Return $ROMZipFileEntry
 
@@ -162,10 +186,6 @@ $Systems = @(
 "Sony - PlayStation"
 )
 
-Write-Output "Important - Please ensure you have only the required ROM files in your chosen ROM directory"
-Write-Output "If you have save or system state files, they will create entries in the playlist!"
-Pause
-
 $val = Select-TextItem $Systems
 
 $LPLFileName = "$val.lpl"
@@ -177,7 +197,7 @@ Try {
     
     # Required because even if the path doesn't exist, GCI still seem's to exit with $true
     If(Test-Path $ROMPath){
-        $ROMS = Get-ChildItem $ROMPath -Recurse -File
+        $ROMS = Get-ChildItem $ROMPath -Recurse -File -Include $FileExtensions
     } else {
         Write-Output "Error - Could not find ROM path $ROMPath"
         exit 1
