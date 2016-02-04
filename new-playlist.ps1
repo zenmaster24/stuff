@@ -131,7 +131,7 @@ Function Get-ZipFile{
     )
 
     [Reflection.Assembly]::LoadWithPartialName('System.IO.Compression.FileSystem')|Out-Null
-    $ROMZipFileEntry = ([IO.Compression.ZipFile]::OpenRead($ROMFullFilePath).Entries.FullName)[0]
+    $ROMZipFileEntry = ([IO.Compression.ZipFile]::OpenRead($ROMFullFilePath).Entries[0].FullName)
 
     Return $ROMZipFileEntry
 
