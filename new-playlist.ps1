@@ -1,20 +1,20 @@
 ﻿<#
 .SYNOPSIS
-    This script tries to create a playlist (.lpl) file for your roms in a given path.
+    This script tries to create a playlist (.lpl) file for your ROMs in a given path.
 
 .DESCRIPTION
     Providing the RetroArch and ROM paths, this script will scan the ROM path and create a playlist file based on the files found during a recursive scan.
     If it detects a zip file, the script will try and enumerate the first file and append it to the ROM path in the playlist, as below.
     
     Each entry in the playlist file requires six lines:
-      1) rom path - rom name inside zip needs to be specified and seperated with #
-      2) display name
-      3) path to core [or DETECT]
-      4) name of core [or DETECT]
+      1) ROM path - ROM name inside zip needs to be specified and separated with #
+      2) Display name
+      3) Path to core [or DETECT]
+      4) Name of core [or DETECT]
       5) CRC          [or DETECT]
-      6) name of playlist
+      6) Name of playlist
     
-    This script outputs the playlist encoding in ansi/ascii.
+    This script outputs the playlist encoding in ANSI.
     
     Example output-
 
@@ -33,16 +33,16 @@
     Position?                    0
     Default value                
     Accept pipeline input?       false
-    Accept wildcard characters?
+    Accept wildcard characters?  false
 
-.PARAMETER ROMpath
+.PARAMETER ROMPath
     The path to the directory containing the ROM files you wish to scan.
 
     Required?                    true
     Position?                    1
     Default value                
     Accept pipeline input?       false
-    Accept wildcard characters?
+    Accept wildcard characters?  false
 
 .PARAMETER FileExtensions
     An array of file extensions you wish to include in the scan.
@@ -50,7 +50,7 @@
 
     Required?                    false
     Position?                    2
-    Default value                
+    Default value                *
     Accept pipeline input?       false
     Accept wildcard characters?  true
 
@@ -63,17 +63,17 @@
 .EXAMPLE
     .\new-playlist.ps1 -RetroArchPath C:\RetroArch -ROMPath C:\ROMS
     
-    Scan C:\ROMS and create the playlist in C:\RetroArch
+    Scan C:\ROMS and create the playlist in C:\RetroArch\playlists.
 
 .EXAMPLE
     .\new-playlist.ps1 -RetroArchPath C:\RetroArch -ROMPath C:\ROMS -FileExtensions *.zip,*.7z
 
-    Scan C:\ROMS and create the playlist in C:\RetroArch, only including files with an extension of .zip or .7z
+    Scan C:\ROMS and create the playlist in C:\RetroArch\playlists, only including files with an extension of .zip or .7z
 
 .EXAMPLE
     .\new-playlist.ps1 -RetroArchPath C:\RetroArch -ROMPath C:\ROMS -FileExtensions *.iso,*.cue
 
-    Scan C:\ROMS and create the playlist in C:\RetroArch, only including files with an extension of .iso or .cue
+    Scan C:\ROMS and create the playlist in C:\RetroArch\playlists, only including files with an extension of .iso or .cue
 
 .NOTES
     Created 30/01/2016
