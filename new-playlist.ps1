@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
     This script tries to create a playlist (.lpl) file for your ROMs in a given path.
 
@@ -86,7 +86,9 @@ Param(
     [Parameter(Mandatory=$True)]
 	[String]$ROMPath=$(Read-Host "ROM path"),
     [Parameter(Mandatory=$False)]
-	[String[]]$FileExtensions="*"
+	[String[]]$FileExtensions="*",
+    [switch]$system,
+    [switch]$noextractzip
 )
 
 Function Select-TextItem{ 
@@ -165,6 +167,7 @@ $Systems = @(
 "Nintendo - Game Boy Advance",
 "Nintendo - Game Boy Color",
 "Nintendo - Game Boy",
+"Nintendo - GameCube",
 "Nintendo - Nintendo 64",
 "Nintendo - Nintendo DS Decrypted",
 "Nintendo - Nintendo DS",
@@ -173,6 +176,7 @@ $Systems = @(
 "Nintendo - Super Nintendo Entertainment System",
 "Nintendo - Virtual Boy",
 "Sega - 32X",
+"Sega - Dreamcast",
 "Sega - Game Gear",
 "Sega - Master System - Mark III",
 "Sega - Mega Drive - Genesis",
@@ -209,11 +213,13 @@ Try {
         $ROMPath = $ROM.FullName
         $ROMName = ($ROM.BaseName).replace(".","")
 
-        If($ROMExtension -eq ".zip"){
+        if(!$noextractzip){
+            If($ROMExtension -eq ".zip"){
             
-            $ROMZip = Get-ZipFile $ROMPath
-            $ROMPath = "$ROMPath#$ROMZip"
+                $ROMZip = Get-ZipFile $ROMPath
+                $ROMPath = "$ROMPath#$ROMZip"
 
+            }
         }
 
 $LPLEntry = @"
