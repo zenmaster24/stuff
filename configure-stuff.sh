@@ -26,11 +26,15 @@ ver=$(lsb_release -sr); if [ $ver != "17.10" -a $ver != "17.04" -a $ver != "16.0
 echo "deb http://download.opensuse.org/repositories/home:/strycore/xUbuntu_$ver/ ./" | sudo tee /etc/apt/sources.list.d/lutris.list
 wget -q http://download.opensuse.org/repositories/home:/strycore/xUbuntu_$ver/Release.key -O- | sudo apt-key add -
 
+# add playonlinuxrepo
+wget -q "http://deb.playonlinux.com/public.gpg" -O- | sudo apt-key add -
+sudo wget http://deb.playonlinux.com/playonlinux_precise.list -O /etc/apt/sources.list.d/playonlinux.list
+
 # update repo list
 sudo apt-get update
 
 # install stuff
-sudo apt install -y git steam code google-chrome-stable jstest-gtk oracle-java8-installer wine winbind lutris #ubuntu-xboxdrv
+sudo apt install -y git steam code google-chrome-stable jstest-gtk oracle-java8-installer wine winbind lutris playonlinux #ubuntu-xboxdrv
 
 # get brettspeilwelt
 wget -q http://www.brettspielwelt.de/Data/brettspielwelt.tar.gz -O ~/Downloads/brettspielwelt.tar.gz
