@@ -26,11 +26,15 @@ ver=$(lsb_release -sr); if [ $ver != "17.10" -a $ver != "17.04" -a $ver != "16.0
 echo "deb http://download.opensuse.org/repositories/home:/strycore/xUbuntu_$ver/ ./" | sudo tee /etc/apt/sources.list.d/lutris.list
 wget -q http://download.opensuse.org/repositories/home:/strycore/xUbuntu_$ver/Release.key -O- | sudo apt-key add -
 
+# add playonlinuxrepo
+wget -q "http://deb.playonlinux.com/public.gpg" -O- | sudo apt-key add -
+sudo wget http://deb.playonlinux.com/playonlinux_precise.list -O /etc/apt/sources.list.d/playonlinux.list
+
 # update repo list
 sudo apt-get update
 
 # install stuff
-sudo apt install -y git steam code google-chrome-stable jstest-gtk oracle-java8-installer wine winbind lutris #ubuntu-xboxdrv
+sudo apt install -y git steam code google-chrome-stable jstest-gtk oracle-java8-installer wine winbind lutris playonlinux #ubuntu-xboxdrv
 
 # get brettspeilwelt
 wget -q http://www.brettspielwelt.de/Data/brettspielwelt.tar.gz -O ~/Downloads/brettspielwelt.tar.gz
@@ -48,6 +52,20 @@ sudo apt -y auto-remove
 touch ~/.vimrc
 echo 'set nocompatible' >> ~/.vimrc
 echo 'set backspace=2' >> ~/.vimrc
+
+# create mount dir
+mkdir -p /media/kirk/2tb
+
+# add entry to fstabd
+echo -e "UUID=b4defa2a-4ecd-4830-9411-82094d56f57c\t/media/kirk/2tb\text4\terrors=remount-ro\t0\t1" >> /etc/fstab
+
+# symlink directories
+# Downloads
+rm -rf ~/Downloads/
+ln -s /media/kirk/2tb/kirk/Downloads/
+
+# comics
+ln -s /media/kirk/2tb/kirk/comics/ ~/Documents/
 
 # restart
 shutdown -r now
