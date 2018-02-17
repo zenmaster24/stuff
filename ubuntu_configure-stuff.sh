@@ -34,7 +34,15 @@ sudo wget http://deb.playonlinux.com/playonlinux_precise.list -O /etc/apt/source
 sudo apt-get update
 
 # install stuff
-sudo apt install -y git steam code google-chrome-stable jstest-gtk oracle-java8-installer wine winbind lutris playonlinux #ubuntu-xboxdrv
+sudo apt install -y git steam code google-chrome-stable jstest-gtk oracle-java8-installer wine winbind lutris playonlinux vagrant #virtualbox ubuntu-xboxdrv
+
+# get virtualbox
+wget -q https://download.virtualbox.org/virtualbox/5.2.6/virtualbox-5.2_5.2.6-120293~Ubuntu~xenial_amd64.deb -O ~/Downloads/virtualbox-5.2_5.2.6-120293~Ubuntu~xenial_amd64.deb 
+sudo dpkg -i ~/Downloads/virtualbox-5.2_5.2.6-120293~Ubuntu~xenial_amd64.deb 
+
+# get packer
+wget -q https://releases.hashicorp.com/packer/1.2.0/packer_1.2.0_linux_amd64.zip -O ~/Downloads/packer_1.2.0_linux_amd64.zip
+sudo unzip ~/Downloads/packer_1.2.0_linux_amd64.zip -d /usr/bin/
 
 # get brettspeilwelt
 wget -q http://www.brettspielwelt.de/Data/brettspielwelt.tar.gz -O ~/Downloads/brettspielwelt.tar.gz
@@ -59,7 +67,8 @@ mkdir -p /media/kirk/2tb
 # add entry to fstabd
 echo -e "UUID=b4defa2a-4ecd-4830-9411-82094d56f57c\t/media/kirk/2tb\text4\terrors=remount-ro\t0\t1" >> /etc/fstab
 
-# symlink directories
+# symlink directories - target dir mus *NOT* exist
+# ie for the below, ~/Downloads must not exist
 # Downloads
 rm -rf ~/Downloads/
 ln -s /media/kirk/2tb/kirk/Downloads/
