@@ -30,15 +30,19 @@ wget -q http://download.opensuse.org/repositories/home:/strycore/xUbuntu_$ver/Re
 wget -q "http://deb.playonlinux.com/public.gpg" -O- | sudo apt-key add -
 sudo wget http://deb.playonlinux.com/playonlinux_precise.list -O /etc/apt/sources.list.d/playonlinux.list
 
+
+# add pcsx2 repo
+sudo add-apt-repository -y ppa:gregory-hainaut/pcsx2.official.ppa
+
 # update repo list
 sudo apt-get update
 
 # install stuff
-sudo apt install -y git steam code google-chrome-stable jstest-gtk oracle-java8-installer wine winbind lutris playonlinux vagrant #virtualbox ubuntu-xboxdrv
+sudo apt install -y git steam code google-chrome-stable jstest-gtk oracle-java8-installer wine winbind lutris playonlinux virtualbox pcsx2 #ubuntu-xboxdrv
 
-# get virtualbox
-wget -q https://download.virtualbox.org/virtualbox/5.2.6/virtualbox-5.2_5.2.6-120293~Ubuntu~xenial_amd64.deb -O ~/Downloads/virtualbox-5.2_5.2.6-120293~Ubuntu~xenial_amd64.deb 
-sudo dpkg -i ~/Downloads/virtualbox-5.2_5.2.6-120293~Ubuntu~xenial_amd64.deb 
+# get vagrant
+wget -q https://releases.hashicorp.com/vagrant/2.0.2/vagrant_2.0.2_x86_64.deb -O ~/Downloads/vagrant_2.0.2_x86_64.deb
+sudo dpkg -i ~/Downloads/vagrant_2.0.2_x86_64.deb
 
 # get packer
 wget -q https://releases.hashicorp.com/packer/1.2.0/packer_1.2.0_linux_amd64.zip -O ~/Downloads/packer_1.2.0_linux_amd64.zip
@@ -50,8 +54,21 @@ cd ~/Downloads/
 tar xzvf brettspielwelt.tar.gz
 sudo mv BrettspielWelt /opt/BrettspielWelt
 
+# get amd vulkan driver
+wget -q https://www2.ati.com/drivers/linux/ubuntu/amdgpu-pro-17.40-492261.tar.xz -O ~/Downloads/amdgpu-pro-17.40-492261.tar.xz
+
+# install driver
+cd ~/Downloads/
+tar -Jxvf amdgpu-pro-17.40-492261.tar.xz
+cd amdgpu-pro-17.40-492261.tar.xz
+./amdgpu-pro-install -y
+
+# manual steps.
+# 1. sudo reboot
+# 2. sudo usermod -a -G video $LOGNAME
+
 # update everything
-sudo apt -y full-upgrade
+# sudo apt -y full-upgrade
 
 # remove left overs
 sudo apt -y auto-remove
