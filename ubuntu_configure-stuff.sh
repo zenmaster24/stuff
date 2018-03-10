@@ -30,7 +30,6 @@ wget -q http://download.opensuse.org/repositories/home:/strycore/xUbuntu_$ver/Re
 wget -q "http://deb.playonlinux.com/public.gpg" -O- | sudo apt-key add -
 sudo wget http://deb.playonlinux.com/playonlinux_precise.list -O /etc/apt/sources.list.d/playonlinux.list
 
-
 # add pcsx2 repo
 sudo add-apt-repository -y ppa:gregory-hainaut/pcsx2.official.ppa
 
@@ -53,19 +52,6 @@ wget -q http://www.brettspielwelt.de/Data/brettspielwelt.tar.gz -O ~/Downloads/b
 cd ~/Downloads/
 tar xzvf brettspielwelt.tar.gz
 sudo mv BrettspielWelt /opt/BrettspielWelt
-
-# get amd vulkan driver
-wget -q https://www2.ati.com/drivers/linux/ubuntu/amdgpu-pro-17.40-492261.tar.xz -O ~/Downloads/amdgpu-pro-17.40-492261.tar.xz
-
-# install driver
-cd ~/Downloads/
-tar -Jxvf amdgpu-pro-17.40-492261.tar.xz
-cd amdgpu-pro-17.40-492261.tar.xz
-./amdgpu-pro-install -y
-
-# manual steps.
-# 1. sudo reboot
-# 2. sudo usermod -a -G video $LOGNAME
 
 # update everything
 # sudo apt -y full-upgrade
