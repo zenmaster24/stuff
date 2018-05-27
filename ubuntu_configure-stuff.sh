@@ -65,19 +65,32 @@ echo 'set nocompatible' >> ~/.vimrc
 echo 'set backspace=2' >> ~/.vimrc
 
 # create mount dir
-mkdir -p /media/kirk/2tb
+# mkdir -p /media/kirk/2tb
 
 # add entry to fstabd
-echo -e "UUID=b4defa2a-4ecd-4830-9411-82094d56f57c\t/media/kirk/2tb\text4\terrors=remount-ro\t0\t1" >> /etc/fstab
+# echo -e "UUID=b4defa2a-4ecd-4830-9411-82094d56f57c\t/media/kirk/2tb\text4\terrors=remount-ro\t0\t1" >> /etc/fstab
 
 # symlink directories - target dir mus *NOT* exist
 # ie for the below, ~/Downloads must not exist
 # Downloads
-rm -rf ~/Downloads/
-ln -s /media/kirk/2tb/kirk/Downloads/
+# rm -rf ~/Downloads/
+# ln -s /media/kirk/2tb/kirk/Downloads/
 
 # comics
-ln -s /media/kirk/2tb/kirk/comics/ ~/Documents/
+# ln -s /media/kirk/2tb/kirk/comics/ ~/Documents/
+
+# setup ohmyzsh
+sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+chsh -s $(which zsh) $(whoami)
+
+# get fonts
+wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
+wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
+mkdir -p ~/.fonts
+mv PowerlineSymbols.otf ~/.fonts/
+mkdir -p .config/fontconfig/conf.d
+fc-cache -vf ~/.fonts/
+mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d
 
 # restart
 shutdown -r now
