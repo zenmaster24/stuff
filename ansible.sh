@@ -16,4 +16,7 @@ source "./${ansible}/bin/activate"
 pip install ansible
 
 # run ansible-pull
-ansible-pull --clean --full --purge --url git@github.com:zenmaster24/ansible.git --only-if-changed
+ansible-pull --clean --full --purge --url https://github.com/zenmaster24/ansible.git #--only-if-changed
+
+# cleanup
+deactivate
