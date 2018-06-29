@@ -1,5 +1,8 @@
 [Desktop Entry]
-Name=Change Resolution
-Exec=bash "~/Documents/repos/stuff/ubuntu_change-res-wrapper.sh"
-Terminal=true
+Name=change-res
+Comment=Change resolution
+Exec=/home/kirk/Documents/repos/stuff/ubuntu_change-res.sh
 Type=Application
+Terminal=true
+#Icon=/path/to/icon/icon.svg
+Name[en_AU]=Change Resolution
