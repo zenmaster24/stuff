@@ -58,7 +58,7 @@
     }
   ],
   "variables": {
-    "iso_url": "file:///media/kirk/2tb/kirk/Downloads/iso/Windows10-Enterprise.iso",
+    "iso_url": "file:////$HOME/Documents/media/iso/Windows10-Enterprise.iso",
     "iso_checksum_type": "sha1",
     "iso_checksum": "3b5f9494d870726d6d8a833aaf6169a964b8a9be",
     "autounattend": "Autounattend.xml",
